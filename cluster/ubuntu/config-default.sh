@@ -18,11 +18,11 @@
 
 # Define all your cluster nodes, MASTER node comes first"
 # And separated with blank space like <user_1@ip_1> <user_2@ip_2> <user_3@ip_3>
-export nodes=${nodes:-"vagrant@192.168.14.102 vagrant@192.168.14.103"}
+export nodes=${nodes:-"vagrant@192.168.14.101 vagrant@192.168.14.102"}
 
 # Define all your nodes role: a(master) or i(minion) or ai(both master and minion),
 # Roles must be the same order with the nodes.
-roles=${roles:-"ai i"}
+roles=${roles:-"a i"}
 # If it practically impossible to set an array as an environment variable
 # from a script, so assume variable is a string then convert it to an array
 export roles_array=($roles)
@@ -31,7 +31,7 @@ export roles_array=($roles)
 export NUM_NODES=${NUM_NODES:-2}
 # define the IP range used for service cluster IPs.
 # according to rfc 1918 ref: https://tools.ietf.org/html/rfc1918 choose a private ip range here.
-export SERVICE_CLUSTER_IP_RANGE=${SERVICE_CLUSTER_IP_RANGE:-192.168.3.0/24}  # formerly PORTAL_NET
+export SERVICE_CLUSTER_IP_RANGE=${SERVICE_CLUSTER_IP_RANGE:-10.3.3.0/24}  # formerly PORTAL_NET
 # define the IP range used for flannel overlay network, should not conflict with above SERVICE_CLUSTER_IP_RANGE
 
 # The Ubuntu scripting supports two ways of networking: Flannel and
@@ -46,7 +46,7 @@ export SERVICE_CLUSTER_IP_RANGE=${SERVICE_CLUSTER_IP_RANGE:-192.168.3.0/24}  # f
 # be relative, in which case they are relative to kubernetes/cluster.
 # If either of CNI_PLUGIN_CONF or CNI_PLUGIN_EXES is undefined or has
 # a zero length value then Flannel will be used instead of CNI.
-
+#TL: UNDEFINE THESE
 export CNI_PLUGIN_CONF CNI_PLUGIN_EXES CNI_KUBELET_TRIGGER
 CNI_PLUGIN_CONF=${CNI_PLUGIN_CONF:-""}
 CNI_PLUGIN_EXES=${CNI_PLUGIN_EXES:-""}
@@ -97,7 +97,7 @@ ENABLE_NODE_LOGGING=false
 LOGGING_DESTINATION=${LOGGING_DESTINATION:-elasticsearch}
 
 # Optional: When set to true, Elasticsearch and Kibana will be setup as part of the cluster bring up.
-ENABLE_CLUSTER_LOGGING=false
+ENABLE_CLUSTER_LOGGING=true
 ELASTICSEARCH_LOGGING_REPLICAS=${ELASTICSEARCH_LOGGING_REPLICAS:-1}
 
 # Optional: When set to true, heapster, Influxdb and Grafana will be setup as part of the cluster bring up.
@@ -114,7 +114,7 @@ KUBE_PROXY_EXTRA_OPTS=${KUBE_PROXY_EXTRA_OPTS:-""}
 # Optional: Install cluster DNS.
 ENABLE_CLUSTER_DNS="${KUBE_ENABLE_CLUSTER_DNS:-true}"
 # DNS_SERVER_IP must be a IP in SERVICE_CLUSTER_IP_RANGE
-DNS_SERVER_IP=${DNS_SERVER_IP:-"192.168.3.10"}
+DNS_SERVER_IP=${DNS_SERVER_IP:-"10.3.3.10"}
 DNS_DOMAIN=${DNS_DOMAIN:-"cluster.local"}
 DNS_REPLICAS=${DNS_REPLICAS:-1}
 

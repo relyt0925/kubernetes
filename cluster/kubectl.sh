@@ -125,7 +125,7 @@ elif [[ "$KUBERNETES_PROVIDER" == "ubuntu" ]]; then
 fi
 
 
-if false; then
+if true; then
   # disable these debugging messages by default
   echo "current-context: \"$(${kubectl} "${config[@]:+${config[@]}}" config view -o template --template='{{index . "current-context"}}')\"" >&2
   echo "Running:" "${kubectl}" "${config[@]:+${config[@]}}" "${@+$@}" >&2

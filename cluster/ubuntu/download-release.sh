@@ -19,6 +19,7 @@
 
 # author @resouer @WIZARD-CXY
 set -e
+set -x
 
 function cleanup {
   # cleanup work
@@ -34,15 +35,16 @@ mkdir -p out
 # flannel
 FLANNEL_VERSION=${FLANNEL_VERSION:-"0.5.5"}
 echo "Prepare flannel ${FLANNEL_VERSION} release ..."
-echo "https://github.com/coreos/flannel/releases/download/v${FLANNEL_VERSION}/flannel-${FLANNEL_VERSION}-linux-amd64.tar.gz"
+echo "https://github.com/coreos/flannel/releases/download/v${FLANNEL_VERSION}/flannel-v${FLANNEL_VERSION}-linux-amd64.tar.gz"
 grep -q "^${FLANNEL_VERSION}\$" binaries/.flannel 2>/dev/null || {
-  ( curl --fail -L https://github.com/coreos/flannel/releases/download/v${FLANNEL_VERSION}/flannel-${FLANNEL_VERSION}-linux-amd64.tar.gz -o flannel.tar.gz &&
-    tar xzf flannel.tar.gz flannel-${FLANNEL_VERSION}/flanneld  > out/flanneld
+  ( curl --fail -L https://github.com/coreos/flannel/releases/download/v${FLANNEL_VERSION}/flannel-v${FLANNEL_VERSION}-linux-amd64.tar.gz -o flannel.tar.gz &&
+    tar xzf flannel.tar.gz flanneld  && mv flanneld out/
   ) ||
   ( curl --fail -L https://github.com/coreos/flannel/releases/download/v${FLANNEL_VERSION}/flannel-v${FLANNEL_VERSION}-linux-amd64.tar.gz -o flannel.tar.gz &&
-    tar xzf flannel.tar.gz flanneld -O > out/flanneld
+    tar xzf flannel.tar.gz flanneld  && mv flanneld out/
   )
   chmod 0755 out/flanneld
+  echo `file out/flanneld`
   cp out/flanneld binaries/master
   cp out/flanneld binaries/minion
   echo ${FLANNEL_VERSION} > binaries/.flannel

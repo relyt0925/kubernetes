@@ -462,7 +462,7 @@ function provision-master() {
 
   EXTRA_SANS=$(echo "${EXTRA_SANS[@]}" | tr ' ' ,)
 
-  BASH_DEBUG_FLAGS=""
+  BASH_DEBUG_FLAGS="set -x"
   if [[ "$DEBUG" == "true" ]] ; then
     BASH_DEBUG_FLAGS="set -x"
   fi
