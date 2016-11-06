@@ -39,6 +39,7 @@ function setClusterInfo() {
   # Such as, you will have NODE_IPS=192.168.0.2,192.168.0.3,192.168.0.2,192.168.0.3,
   # which is obviously wrong.
   NODE_IPS=""
+  echo $NODE_IPS
 
   local ii=0
   for i in $nodes; do
@@ -378,6 +379,7 @@ function kube-up() {
   # downloading tarball release
   "${KUBE_ROOT}/cluster/ubuntu/download-release.sh"
 
+  echo "HIIIII"
   # Fetch the hacked easyrsa that make-ca-cert.sh will use
   curl -L -O https://storage.googleapis.com/kubernetes-release/easy-rsa/easy-rsa.tar.gz > /dev/null 2>&1
 
